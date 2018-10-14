@@ -1,0 +1,5 @@
+*.npz
+*.tfrecords
+*.png
+*.pyc
+*.csv
