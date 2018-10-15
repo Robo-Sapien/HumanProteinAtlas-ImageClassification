@@ -59,10 +59,10 @@ def parse_tfrecords_file(train_filename_pattern,test_filename_pattern,
     comp_type='ZLIB'
     #Reading the training datasets
     train_dataset=tf.data.TFRecordDataset(train_filename_pattern,
-                        compression_type=comp_type,num_parallel_reads=ncpu/2)
+                        compression_type=comp_type,num_parallel_reads=int(ncpu/2))
     #Reading the testing datasets
     test_dataset=tf.data.TFRecordDataset(test_filename_pattern,
-                        compression_type=comp_type,num_parallel_reads=ncpu/2)
+                        compression_type=comp_type,num_parallel_reads=int(ncpu/2))
 
     #Shuffling the file instead of the each examples
     train_dataset=train_dataset.shuffle(buffer_size=shuffle_buffer_size)
@@ -73,12 +73,12 @@ def parse_tfrecords_file(train_filename_pattern,test_filename_pattern,
     train_dataset=train_dataset.apply(
             tf.contrib.data.map_and_batch(_binary_parse_function_example,
                                             mini_batch_size,
-                                            num_parallel_batches=ncpu/2,
+                                            num_parallel_batches=int(ncpu/2),
                                             drop_remainder=False))
     test_dataset=test_dataset.apply(
             tf.contrib.data.map_and_batch(_binary_parse_function_example,
                                             mini_batch_size,
-                                            num_parallel_batches=ncpu/2,
+                                            num_parallel_batches=int(ncpu/2),
                                             drop_remainder=False))
 
     #Prefetching the dataset

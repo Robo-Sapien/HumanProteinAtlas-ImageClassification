@@ -73,14 +73,14 @@ def read_cell_image(labels_df,directory_name,mode='train'):
                 except:
                     flag=1
                     break
-                plt.imshow(img,cmap='gray')
-                plt.show()
+                #plt.imshow(img,cmap='gray')
+                #plt.show()
                 images[filter]=img
 
             #Creation of labels for the image
             if mode=='train' and flag==0:
                 #Get the labels string
-                label_string=labels_df.loc[img_name,'Predicted']
+                label_string=labels_df.loc[img_name,'Target']
                 many_hot=_encode_many_hot(label_string)
 
                 #Now we will create an example feature to be saved in tfrecords
@@ -111,8 +111,8 @@ def read_cell_image(labels_df,directory_name,mode='train'):
 
 
 if __name__=='__main__':
-    directory_name='sample_images'
-    labels_path='dataset/sample_submission.csv'
+    directory_name='/media/dell/My Passport/Human Genome Project/train'
+    labels_path='/media/dell/My Passport/Human Genome Project/train.csv'
 
     df=_load_the_label(labels_path)
-    read_cell_image(df,directory_name,mode='test')
+    read_cell_image(df,directory_name,mode='train')
